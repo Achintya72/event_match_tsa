@@ -25,3 +25,20 @@ body {
     text-wrap: balance;
   }
 }
+
+
+.loader {
+  animation: spinAndPan 2500ms ease infinite;
+}
+
+@keyframes spinAndPan {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(360deg) rotateX(180deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateX(0deg);
+  }
+}
