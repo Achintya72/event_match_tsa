@@ -5,15 +5,21 @@ interface Student {
     uid: string,
     priorQuals: Qual[],
     teams: string[],
+    onboarded: boolean
 }
 
-interface Qual {
-    eventName: string,
+interface Qual extends Option {
     level: "National" | "State",
     placement: number
 }
 
+interface Option {
+    name: string,
+    id: string
+}
+
 export type {
     Student,
-    Qual
+    Qual,
+    Option
 }

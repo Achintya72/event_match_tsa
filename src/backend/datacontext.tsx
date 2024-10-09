@@ -33,11 +33,11 @@ const DataContextProvider = ({ children }: PropsWithChildren) => {
     const [teams, changeTeams] = useState<Team[] | null>(null);
     const [authUser, changeAuthUser] = useState<User | null>(null);
     const [loggedIn, changeLoggedIn] = useState<boolean | null>(null);
-    const [loading, changeLoading] = useState(false);
+    const [loading, changeLoading] = useState(true);
 
     useEffect(() => {
         let callback = onAuthStateChanged(auth, (user) => {
-            if(user) {
+            if (user) {
                 changeAuthUser(user);
                 changeLoggedIn(true);
             } else {
@@ -51,56 +51,56 @@ const DataContextProvider = ({ children }: PropsWithChildren) => {
     useEffect(() => {
         const getStudents = () => {
             let unsub = onSnapshot(collection(db, "students"), (data) => {
-                let newStudents: Student[]= [];
+                let newStudents: Student[] = [];
                 data.docs.forEach(doc => {
-                    newStudents.push({...doc.data(), uid: doc.id} as Student);
+                    newStudents.push({ ...doc.data(), uid: doc.id } as Student);
                 });
-                changeStudents(newStudents); 
-                console.log(newStudents);
+                changeStudents(newStudents);
             });
             return unsub;
         }
-        
+
         const getEvents = () => {
             let unsub = onSnapshot(collection(db, "events"), (data) => {
-                let newEvents : CompEvent[] = [];
+                let newEvents: CompEvent[] = [];
                 data.docs.forEach(doc => {
-                    newEvents.push({...doc.data(), id: doc.id } as CompEvent);
-                }) 
+                    newEvents.push({ ...doc.data(), id: doc.id } as CompEvent);
+                })
+                changeEvents(newEvents);
+
             })
             return unsub;
         }
 
         const getTeams = () => {
             let unsub = onSnapshot(collection(db, "teams"), data => {
-                let newTeams : Team[] = [];
+                let newTeams: Team[] = [];
                 data.docs.forEach(doc => {
-                    newTeams.push({ ...doc.data(), id: doc.id} as Team);
+                    newTeams.push({ ...doc.data(), id: doc.id } as Team);
                 })
+                changeTeams(newTeams);
             });
             return unsub;
         }
 
-        if(loggedIn != null) {
-            if(auth) {
-                let stuUnsub = getStudents();
-                let eveUnsub = getEvents();
-                let teamUnsub = getTeams();
-                return () => {
-                    stuUnsub();
-                    eveUnsub();
-                    teamUnsub();
-                }
-            } else {
-                changeStudents(null);
-                changeEvents(null);
-                changeTeams(null);
+        if (auth) {
+            let stuUnsub = getStudents();
+            let eveUnsub = getEvents();
+            let teamUnsub = getTeams();
+            return () => {
+                stuUnsub();
+                eveUnsub();
+                teamUnsub();
             }
-        }
+        } else {
+            changeStudents([]);
+            changeEvents([]);
+            changeTeams([]);
+        } 
     }, [auth, loggedIn, changeStudents, changeEvents, changeTeams]);
 
     useEffect(() => {
-        if(auth && students && events && teams) {
+        if (loggedIn != null && students != null && events != null && teams != null) {
             changeLoading(false);
         }
     }, [auth, students, events, teams]);
@@ -114,7 +114,7 @@ const DataContextProvider = ({ children }: PropsWithChildren) => {
         loading
     };
 
-    if(loading) {
+    if (loading) {
         return <Loader />
     }
 

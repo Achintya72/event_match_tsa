@@ -98,7 +98,8 @@ function SignUp({ changeMode }: ModeProps ) {
                 grade: 9,
                 email: values.email,
                 priorQuals: [],
-                teams: []
+                teams: [],
+                onboarded: false
             };
             await setDoc(doc(db, "students", user.user.uid), {
                 ...userObj
