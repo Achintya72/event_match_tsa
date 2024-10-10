@@ -61,7 +61,7 @@ const DataContextProvider = ({ children }: PropsWithChildren) => {
         }
 
         const getEvents = () => {
-            let unsub = onSnapshot(collection(db, "events"), (data) => {
+            let unsub = onSnapshot(collection(db, "Events"), (data) => {
                 let newEvents: CompEvent[] = [];
                 data.docs.forEach(doc => {
                     newEvents.push({ ...doc.data(), id: doc.id } as CompEvent);

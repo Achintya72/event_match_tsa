@@ -16,7 +16,7 @@ export default function Selector({ value, changeValue, options }: { value: { id:
             <input value={searchText} onChange={(e) => changeSearchText(e.target.value)} onFocus={() => toggleShowOptions(true)} placeholder="Select Option" className="font-rubik p-[10px] bg-gray-100 focus:outline focus:outline-1 focus:outline-black" />
             {showOptions &&
 
-                <div className="absolute top-[120%] max-h-[450px] overflow-y-auto w-full flex flex-col bg-white drop-shadow-lg border border-gray-100">
+                <div className="absolute top-[120%] max-h-[250px] overflow-y-auto w-full flex flex-col bg-white drop-shadow-lg border border-gray-100">
                     {myOptions.map(o =>
                         <a className="font-rubik p-[10px] hover:bg-gray-100" onClick={() => {
                             changeValue(o);
