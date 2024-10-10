@@ -94,7 +94,7 @@ function SignUp({ changeMode }: ModeProps ) {
             let user = await createUserWithEmailAndPassword(auth, values.email, values.password);
             let userObj: Student = {
                 uid: user.user.uid,
-                name: values.email,
+                name: "",
                 grade: 9,
                 email: values.email,
                 priorQuals: [],
@@ -137,7 +137,7 @@ function SignUp({ changeMode }: ModeProps ) {
                         let chars = Array.from(value);
                         if (!chars.some(char => /[A-Z]/.test(char))) return "Password must have at least one uppercase letter";
                         if (!chars.some(char => /[a-z]/.test(char))) return "Password must have at least one lowercase letter";
-                        if (!chars.some(char => /[1-9]/.test(char))) return "Password must have atleast one numerical digit";
+                        if (!chars.some(char => /[0-9]/.test(char))) return "Password must have atleast one numerical digit";
                         if (!chars.some(char => /[!@#$%^&*(),.?":{}|<>]/.test(char))) return "Password must have atleast one of [!@#$%^&*(),.?\":{}|<>]";
                     }
                 }}

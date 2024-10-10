@@ -10,7 +10,8 @@ interface Student {
 
 interface Qual extends Option {
     level: "National" | "State",
-    placement: number
+    placement: number,
+    eventId: string,
 }
 
 interface Option {
